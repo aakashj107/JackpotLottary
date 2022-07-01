@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense } from "react";
-import "./app/styles/index.scss";
+// import "./app/styles/index.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signout } from "./app/state/authSlice";
@@ -34,7 +34,7 @@ const App = (props) => {
   return (
     <React.Fragment>
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
           <Suspense fallback={<Loading />}>
               <Switch>
                 <Route exact path="/" {...props} component={Landing} />
@@ -45,7 +45,7 @@ const App = (props) => {
                 <Route exact path="/lottary" {...props} component={Lottary} />
               </Switch>
           </Suspense>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </React.Fragment>
   );
