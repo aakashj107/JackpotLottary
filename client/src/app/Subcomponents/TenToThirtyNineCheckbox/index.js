@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { range } from "../../Utils/util";
 
 const TenToThirtyNineCheckbox = () => {
+
+    const[columnObj, setColumnobj] = useState([
+        {firstColumn: 10, secondColumn: 30},
+        {firstColumn: 11, secondColumn: 31},
+        {firstColumn: 12, secondColumn: 32},
+        {firstColumn: 13, secondColumn: 33},
+        {firstColumn: 14, secondColumn: 34},
+        {firstColumn: 15, secondColumn: 35},
+        {firstColumn: 16, secondColumn: 36},
+        {firstColumn: 17, secondColumn: 37},
+        {firstColumn: 18, secondColumn: 38},
+        {firstColumn: 19, secondColumn: 39},
+    ])
 
     return (
         <>
@@ -21,12 +35,13 @@ const TenToThirtyNineCheckbox = () => {
         <div className="row">
         <table className="table table-bordered">
             <tbody>
+              {columnObj.map(x =>   
                 <tr className="bg-white">
                     <th>
                         <div className="form-check">
                             <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                             <label className="form-check-label" for="flexCheckDefault">
-                                10
+                                {x.firstColumn}
                             </label>
                         </div>
                     </th>
@@ -34,174 +49,12 @@ const TenToThirtyNineCheckbox = () => {
                         <div className="form-check">
                             <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                             <label className="form-check-label" for="flexCheckDefault">
-                                30
+                                {x.secondColumn}
                             </label>
                         </div>
                     </th>
                 </tr>
-                <tr className="bg-white">
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                11
-                            </label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                31
-                            </label>
-                        </div>
-                    </th>
-                </tr>
-                <tr className="bg-white">
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                12
-                            </label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                32
-                            </label>
-                        </div>
-                    </th>
-                </tr>
-                <tr className="bg-white">
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                13
-                            </label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                33
-                            </label>
-                        </div>
-                    </th>
-                </tr>
-                <tr className="bg-white">
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                14
-                            </label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                34
-                            </label>
-                        </div>
-                    </th>
-                </tr>
-                <tr className="bg-white">
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                15
-                            </label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                35
-                            </label>
-                        </div>
-                    </th>
-                </tr>
-                <tr className="bg-white">
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                16
-                            </label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                36
-                            </label>
-                        </div>
-                    </th>
-                </tr>
-                <tr className="bg-white">
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                17
-                            </label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                37
-                            </label>
-                        </div>
-                    </th>
-                </tr>
-                <tr className="bg-white">
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                18
-                            </label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                38
-                            </label>
-                        </div>
-                    </th>
-                </tr>
-                <tr className="bg-white">
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                19
-                            </label>
-                        </div>
-                    </th>
-                    <th>
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" for="flexCheckDefault">
-                                39
-                            </label>
-                        </div>
-                    </th>
-                </tr>
-
+                )}  
             </tbody>
         </table>
     </div>
