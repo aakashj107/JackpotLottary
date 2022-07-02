@@ -28,6 +28,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4",
     "pg": "^8.4.1",
+    "react-countdown": "^2.3.2",
     "yes-https": "^2.0.0"
   }
 }
