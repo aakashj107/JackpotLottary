@@ -89,7 +89,8 @@ const Filter = (props) => {
             className="form-check-input"
             type="checkbox"
             id="inlineCheckbox1"
-            value="option1"
+            value={props.allFilterSelected}
+            onClick={(ev) => props.setAllFilterSelected(ev.target.checked)}
           />
           <label
             className="form-check-label fw-bold text-white"
@@ -103,7 +104,8 @@ const Filter = (props) => {
             className="form-check-input"
             type="checkbox"
             id="inlineCheckbox2"
-            value="option2"
+            value={props.oddFilterSelected}
+            onClick={(ev) => props.setOddFilterSelected(ev.target.checked)}
           />
           <label
             className="form-check-label fw-bold text-white"
@@ -118,7 +120,8 @@ const Filter = (props) => {
             className="form-check-input"
             type="checkbox"
             id="inlineCheckbox2"
-            value="option2"
+            value={props.evenFilterSelected}
+            onClick={(ev) => props.setEvenFilterSelected(ev.target.checked)}
           />
           <label
             className="form-check-label fw-bold text-white"

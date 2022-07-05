@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Buttons from "../../Subcomponents/Buttons";
 import Columns from "../../Subcomponents/Columns";
 import DrawStatus from "../../Subcomponents/DrawStatus";
@@ -17,58 +17,69 @@ const Lottary = () => {
     return abc;
   };
 
-  let [columnXYObj, setXYColumnobj] = useState([
+  const [columnXYObj, setXYColumnobj] = useState([
     {
       headerCount: 0,
       rowData: creatRowData(0, 9),
-      value: null,
+      total: 0,
+      point: 0,
     },
     {
       headerCount: 1,
       rowData: creatRowData(10, 19),
-      value: null,
+      total: 0,
+      point: 0,
     },
     {
       headerCount: 2,
       rowData: creatRowData(20, 29),
-      value: null,
+      total: 0,
+      point: 0,
     },
     {
       headerCount: 3,
       rowData: creatRowData(30, 39),
-      value: null,
+      total: 0,
+      point: 0,
     },
     {
       headerCount: 4,
       rowData: creatRowData(40, 49),
-      value: null,
+      total: 0,
+      point: 0,
     },
     {
       headerCount: 5,
       rowData: creatRowData(50, 59),
-      value: null,
+      total: 0,
+      point: 0,
     },
     {
       headerCount: 6,
       rowData: creatRowData(60, 69),
-      value: null,
+      total: 0,
+      point: 0,
     },
     {
       headerCount: 7,
       rowData: creatRowData(70, 79),
-      value: null,
+      total: 0,
+      point: 0,
     },
     {
       headerCount: 8,
       rowData: creatRowData(80, 89),
-      value: null,
+      total: 0,
+      point: 0,
     },
     {
       headerCount: 9,
       rowData: creatRowData(90, 99),
-      value: null,
+      total: 0,
+      point: 0,
     },
   ]);
+
   const [columnObj, setColumnobj] = useState([
     {
       firstColumn: {
@@ -180,6 +191,11 @@ const Lottary = () => {
     isTenToNinteen: false,
   });
 
+  
+  const [allFilterSelected, setAllFilterSelected] = useState(false);
+  const [oddFilterSelected, setOddFilterSelected] = useState(false);
+  const [evenFilterSelected, setEvenFilterSelected] = useState(false);
+
   const checkBoxForTenToNinteen = (value) => {
     setTenToNineTeen(value);
     columnObj.forEach((x, index) => {
@@ -204,6 +220,22 @@ const Lottary = () => {
     });
   };
 
+  const getTotalAndPoint = () => {
+    const updatedColumnObj = [...columnXYObj];
+    updatedColumnObj.forEach((x, index) => {
+      let totalCounter = 0;
+      columnXYObj[index].rowData.map((y, ind) => {
+        if (y.value) {
+        totalCounter = totalCounter + parseInt(y.value);
+        }
+      });
+      columnXYObj[index].total = totalCounter;
+      columnXYObj[index].point = totalCounter * 2;
+    });
+
+    setXYColumnobj([...updatedColumnObj]);
+  };
+
   return (
     <div className="container-fluid">
       <DrawStatus />
@@ -214,6 +246,12 @@ const Lottary = () => {
         setThirtyToThirtyNine={setThirtyToThirtyNine}
         checkBoxCheckedUnchecked={checkBoxCheckedUnchecked}
         columnObj={columnObj}
+        allFilterSelected={allFilterSelected}
+        oddFilterSelected={oddFilterSelected}
+        evenFilterSelected={evenFilterSelected}
+        setAllFilterSelected={setAllFilterSelected}
+        setEvenFilterSelected={setEvenFilterSelected}
+        setOddFilterSelected={setOddFilterSelected}
       />
       <div className="row">
         <div className="col-sm-1 bordered">
@@ -223,11 +261,13 @@ const Lottary = () => {
             setColumnobj={setColumnobj}
           />
         </div>
-        <Columns columnObj={columnXYObj} setColumnobj={setXYColumnobj} />
-        <TotalResult />
+        <Columns allFilterSelected={allFilterSelected}
+        oddFilterSelected={oddFilterSelected}
+        evenFilterSelected={evenFilterSelected} getTotalAndPoint={getTotalAndPoint} columnObj={columnXYObj} setColumnobj={setXYColumnobj} />
+        <TotalResult columnXYObj={columnXYObj} />
       </div>
 
-      <Buttons />
+      <Buttons columnXYObj={columnXYObj} columnObj={columnObj} />
     </div>
   );
 };
