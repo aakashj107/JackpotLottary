@@ -1,18 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Filter = (props) => {
   const [tenToNineTeen, setTenToNineTeen] = useState(false);
   const [thirtyToThirtyNine, setThirtyToThirtyNine] = useState(false);
 
+  useEffect(() => {
+    props.checkBoxCheckedUnchecked.isTenToNinteen
+      ? setTenToNineTeen(props.checkBoxCheckedUnchecked.event)
+      : setThirtyToThirtyNine(props.checkBoxCheckedUnchecked.event);
+  }, [props.checkBoxCheckedUnchecked]);
+
   const handleClickTenToNineTeen = (event) => {
-    setTenToNineTeen(event.target.checked);
-    props.setTenToNineTeen(event.target.checked);
+    setTenToNineTeen(() => props.checkBoxForTenToNinteen(event.target.checked));
   };
 
   const handleClickThirtyToThirtyNine = (event) => {
     setThirtyToThirtyNine(event.target.checked);
-    props.setThirtyToThirtyNine(event.target.checked);
+    props.setThirtyToThirtyNine(() =>
+      props.checkBoxForThirtyToThirtyNine(event.target.checked)
+    );
   };
+
   return (
     <div className="row border">
       <div className="col-sm-1 bg-danger py-2 border">

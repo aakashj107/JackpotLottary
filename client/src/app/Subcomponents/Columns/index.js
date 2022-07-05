@@ -1,67 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { range } from "../../Utils/util";
 
-const Columns = () => {
-  const creatRowData = (start, end) => {
-    const abc = [...Array.from(range(start, end))].map((x) => ({
-      count: x,
-      value: undefined,
-    }));
-    return abc;
-  };
-
-  let [columnObj, setColumnobj] = useState([
-    {
-      headerCount: 0,
-      rowData: creatRowData(0, 9),
-      value: null,
-    },
-    {
-      headerCount: 1,
-      rowData: creatRowData(10, 19),
-      value: null,
-    },
-    {
-      headerCount: 2,
-      rowData: creatRowData(20, 29),
-      value: null,
-    },
-    {
-      headerCount: 3,
-      rowData: creatRowData(30, 39),
-      value: null,
-    },
-    {
-      headerCount: 4,
-      rowData: creatRowData(40, 49),
-      value: null,
-    },
-    {
-      headerCount: 5,
-      rowData: creatRowData(50, 59),
-      value: null,
-    },
-    {
-      headerCount: 6,
-      rowData: creatRowData(60, 69),
-      value: null,
-    },
-    {
-      headerCount: 7,
-      rowData: creatRowData(70, 79),
-      value: null,
-    },
-    {
-      headerCount: 8,
-      rowData: creatRowData(80, 89),
-      value: null,
-    },
-    {
-      headerCount: 9,
-      rowData: creatRowData(90, 99),
-      value: null,
-    },
-  ]);
+const Columns = ({columnObj, setColumnobj}) => {
 
   const handleChange = (event, headerCount, isXaxis) => {
     columnObj.map((x, index) =>
