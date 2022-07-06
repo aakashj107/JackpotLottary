@@ -32,8 +32,12 @@ router.post("/", async (req, res) => {
     const authenticated_user = {
       id: user.id,
       login_id: user.login_id,
-      first_name: user.first_name,
-      last_name: user.last_name,
+      retailer_name: user.retailer_name,
+      mobile_name: user.mobile_name,
+      address:user.mobile_name,
+      pincode:user.pincode,
+      balance:user.balance,
+      login_status:user.login_status,
     };
 
     //Create and set access token via cookie

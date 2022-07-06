@@ -13,7 +13,7 @@ const Private = () => {
     <div className="Private">
       <div className="inner container is-fixed">
         <h2 className="title has-text-centered">Another Private Page</h2>
-        <p className="is-md has-text-centered">{`Welcome, ${auth.user.first_name} ${auth.user.last_name}`}</p>
+        <p className="is-md has-text-centered">{`Welcome, ${auth.user.retailer_name}`}</p>
         <p className="subtitle has-text-centered">
           This is Another Private Page. This is a private route and only
           displayed if user is logged in.

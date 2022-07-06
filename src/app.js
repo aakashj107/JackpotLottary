@@ -26,5 +26,6 @@ if (process.env.NODE_ENV === "production") {
 /*Define routes*/
 app.use("/api/user", require("./routes/api/user"));
 app.use("/auth/local", require("./routes/auth/local"));
+app.use("/api/game", require("./routes/api/game"));
 
 module.exports = app;
