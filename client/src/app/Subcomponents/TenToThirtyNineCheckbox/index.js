@@ -1,89 +1,85 @@
 import React, { useEffect, useState } from "react";
-import { range } from "../../Utils/util";
 
 const TenToThirtyNineCheckbox = ({
-  checkTenToNineTeen,
-  checkThirtyToThirtyNine,
+  handleFilterCheckBox,
+  columnObj,
+  setColumnobj,
 }) => {
-  // useEffect(() => {
-  // }, [tenToNineTeen])
-
-  const [columnObj, setColumnobj] = useState([
-    { firstColumn: 10, secondColumn: 30 },
-    { firstColumn: 11, secondColumn: 31 },
-    { firstColumn: 12, secondColumn: 32 },
-    { firstColumn: 13, secondColumn: 33 },
-    { firstColumn: 14, secondColumn: 34 },
-    { firstColumn: 15, secondColumn: 35 },
-    { firstColumn: 16, secondColumn: 36 },
-    { firstColumn: 17, secondColumn: 37 },
-    { firstColumn: 18, secondColumn: 38 },
-    { firstColumn: 19, secondColumn: 39 },
-  ]);
-
-  // const createColumn = (start, end) => {
-  //     const abc = [...Array.from(range(start, end))].map((x) => ({
-  //         count: x,
-  //         value: undefined,
-  //       }));
-  //       return abc;
-  // }
-
-  // const[columnObj, setColumnobj] = useState([
-  //     {firstColumn: createColumn(10, 19), secondColumn: createColumn(30, 19)}
-  // ]);
+  const handleClick = (event, index, parameter, isTenToNinteen) => {
+    let columnObj1 = [...columnObj];
+    columnObj1[index][parameter] = {
+      ...columnObj1[index][parameter],
+      value: event.target.checked,
+    };
+    setColumnobj([...columnObj1]);
+    let isAllChecked = true;
+    columnObj1.map((x) => {
+      if (x[parameter].value === false) {
+        isAllChecked = false;
+        return;
+      }
+    });
+    handleFilterCheckBox(isAllChecked, isTenToNinteen);
+  };
 
   return (
     <>
       <div className="row ">
         <table className="table table-bordered">
+          <tbody>
           <tr className="bg-danger">
-            <th>
+            <th style={{paddingBottom:"10px"}}>
               <div className="form-check">
                 <input
                   className="form-check-input"
                   type="checkbox"
                   value=""
-                  id="flexCheckDefault"
-                />
-                <label className="form-check-label" for="flexCheckDefault">
+                  id="flexCheckDefault" />
+                <label className="form-check-label fw-bold text-white" for="flexCheckDefault">
                   10 to 39
                 </label>
               </div>
             </th>
           </tr>
+          </tbody>
         </table>
       </div>
       <div className="row">
         <table className="table table-bordered">
           <tbody>
-            {columnObj.map((x) => (
-              <tr className="bg-white">
-                <th>
+            {columnObj.map((x, index) => (
+              <tr>
+                <th style={{paddingBottom:"11px"}}>
                   <div className="form-check">
                     <input
-                      checked={checkTenToNineTeen}
+                      checked={x.firstColumn.value}
                       className="form-check-input"
                       type="checkbox"
-                      value=""
+                      value={x.firstColumn.value}
+                      onClick={(ev) =>
+                        handleClick(ev, index, "firstColumn", true)
+                      }
                       id="flexCheckDefault"
                     />
-                    <label className="form-check-label" for="flexCheckDefault">
-                      {x.firstColumn}
+                    <label className="form-check-label text-white" for="flexCheckDefault">
+                      {x.firstColumn.count}
                     </label>
                   </div>
                 </th>
-                <th>
+                <th style={{paddingBottom:"11px"}}>
                   <div className="form-check">
                     <input
-                      checked={checkThirtyToThirtyNine}
+                      checked={x.secondColumn.value}
+                      value={x.secondColumn.value}
+                      onClick={(ev) =>
+                        handleClick(ev, index, "secondColumn", false)
+                      }
                       className="form-check-input"
                       type="checkbox"
-                      value=""
                       id="flexCheckDefault"
                     />
-                    <label className="form-check-label" for="flexCheckDefault">
-                      {x.secondColumn}
+                    <label className="form-check-label text-white" for="flexCheckDefault">
+                      {x.secondColumn.count}
                     </label>
                   </div>
                 </th>

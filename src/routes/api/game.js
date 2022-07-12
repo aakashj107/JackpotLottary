@@ -32,11 +32,17 @@ router.post("/createNewGame",[mw.auth.authenticate], async (req, res) => {
 //@route    GET api/game/currentGame
 //@desc     Get the details of an existing user
 //@access   private
-router.get("/me", [mw.auth.authenticate], async (req,res) => {
+router.get("/getcurrentGame", [mw.auth.authenticate], async (req,res) => {
   try {
+
+     //Insert new user to the table and store the newUser in a variable
+     const current_game = await mw.db.getGames();
+
     res.status(200).json({
       message: "Success",
-      payload: req.user
+      payload: {
+        current_game: current_game
+      }
     });
   } catch (error) {
     console.error(error);
