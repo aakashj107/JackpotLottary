@@ -1,32 +1,55 @@
 import React, { useEffect, useState } from "react";
 
-const Columns = ({columnObj, setColumnobj, getTotalAndPoint, allFilterSelected, evenFilterSelected, oddFilterSelected}) => {
-
+const Columns = ({
+  columnObj,
+  setColumnobj,
+  getTotalAndPoint,
+  allFilterSelected,
+  evenFilterSelected,
+  oddFilterSelected,
+}) => {
   const handleChange = (event, headerCount, isXaxis) => {
     columnObj.map((x, index) =>
       x.rowData.map((y, ind) => {
         let a = y.count.toString();
-          if (!isXaxis && a.length === 1) {
-            a = `0${a}`;
+        if (!isXaxis && a.length === 1) {
+          a = `0${a}`;
+        }
+
+        if (!allFilterSelected && evenFilterSelected) {
+          if (
+            (parseInt(a[0]) % 2 === 0 &&
+              isXaxis &&
+              a[a.length - 1] == headerCount) ||
+            (parseInt(a) % 2 === 0 &&
+              !isXaxis &&
+              ((a.length === 1 && a[1] == headerCount) ||
+                (a.length === 2 && a[0] == headerCount)))
+          ) {
+            columnObj[index].rowData[ind].value = event.target.value;
           }
-        if(!oddFilterSelected && !evenFilterSelected){
-          if ((isXaxis && a[a.length - 1] == headerCount) ||
-          (!isXaxis && ((a.length === 1 && a[1] == headerCount) || (a.length === 2 && a[0] == headerCount)))) 
-          {
+        } else if (!allFilterSelected && oddFilterSelected) {
+          if (
+            (parseInt(a[0]) % 2 !== 0 &&
+              isXaxis &&
+              a[a.length - 1] == headerCount) ||
+            (parseInt(a) % 2 !== 0 &&
+              !isXaxis &&
+              ((a.length === 1 && a[1] == headerCount) ||
+                (a.length === 2 && a[0] == headerCount)))
+          ) {
+            columnObj[index].rowData[ind].value = event.target.value;
+          }
+        } else {
+          if (
+            (isXaxis && a[a.length - 1] == headerCount) ||
+            (!isXaxis &&
+              ((a.length === 1 && a[1] == headerCount) ||
+                (a.length === 2 && a[0] == headerCount)))
+          ) {
             columnObj[index].rowData[ind].value = event.target.value;
           }
         }
-        if(evenFilterSelected){
-              if(parseInt(a[0]) % 2 === 0 && (isXaxis && a[a.length - 1] == headerCount)){
-                columnObj[index].rowData[ind].value = event.target.value;
-              }
-        }
-        if(oddFilterSelected){
-          if(parseInt(a[0]) % 2 !== 0 && (isXaxis && a[a.length - 1] == headerCount)){
-            columnObj[index].rowData[ind].value = event.target.value;
-          }
-        }
-       
       })
     );
 

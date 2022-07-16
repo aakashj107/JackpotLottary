@@ -1,6 +1,6 @@
 import React from "react";
 
-const Buttons = ({ columnXYObj, columnObj }) => {
+const Buttons = ({ columnXYObj, columnObj, setColumnobj, setXYColumnobj }) => {
   const buySelectedLottery = () => {
     const selectedLotteryNumber = [];
     const selectedCheckBoxes = [];
@@ -20,12 +20,25 @@ const Buttons = ({ columnXYObj, columnObj }) => {
         selectedCheckBoxes.push(x.secondColumn.count);
       }
     });
-    const lotteryData = {
-        lottery_amt:selectedLotteryNumber,
-        lottery: selectedCheckBoxes
-    }
+  };
 
-    console.log(lotteryData);
+  const clearAllData = () => {
+    columnObj.forEach((x, index) => {
+      columnObj[index].firstColumn.value = false;
+      columnObj[index].secondColumn.value = false;
+    });
+
+   columnXYObj.map((x, index) => {
+      x.rowData.map((y, ind) => {
+        columnXYObj[index].rowData[ind].value = '';
+      });
+      columnXYObj[index].point = 0;
+      columnXYObj[index].total = 0;
+    });
+
+  setXYColumnobj([...columnXYObj]);
+  setColumnobj([...columnObj]);
+   
   };
 
   return (
@@ -56,7 +69,7 @@ const Buttons = ({ columnXYObj, columnObj }) => {
           <button className="btn btn-danger" type="button">
             Results (F4){" "}
           </button>
-          <button className="btn btn-info" type="button">
+          <button onClick={clearAllData} className="btn btn-info" type="button">
             {" "}
             Clear All (F9)
           </button>

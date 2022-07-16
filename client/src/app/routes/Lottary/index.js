@@ -12,7 +12,7 @@ const Lottary = () => {
   const creatRowData = (start, end) => {
     const abc = [...Array.from(range(start, end))].map((x) => ({
       count: x,
-      value: undefined,
+      value: '',
     }));
     return abc;
   };
@@ -236,6 +236,12 @@ const Lottary = () => {
     setXYColumnobj([...updatedColumnObj]);
   };
 
+  const selectAllFilter =(value) => {
+    setOddFilterSelected(value);
+    setEvenFilterSelected(value);
+  }
+
+
   return (
     <div className="container-fluid">
       <DrawStatus />
@@ -249,9 +255,12 @@ const Lottary = () => {
         allFilterSelected={allFilterSelected}
         oddFilterSelected={oddFilterSelected}
         evenFilterSelected={evenFilterSelected}
+        selectAllFilter={selectAllFilter}
         setAllFilterSelected={setAllFilterSelected}
         setEvenFilterSelected={setEvenFilterSelected}
         setOddFilterSelected={setOddFilterSelected}
+        columnXYObj={columnXYObj}
+        setXYColumnobj={setXYColumnobj}
       />
       <div className="row">
         <div className="col-sm-1 bordered">
@@ -267,7 +276,7 @@ const Lottary = () => {
         <TotalResult columnXYObj={columnXYObj} />
       </div>
 
-      <Buttons columnXYObj={columnXYObj} columnObj={columnObj} />
+      <Buttons columnXYObj={columnXYObj} setXYColumnobj={setXYColumnobj} setColumnobj={setColumnobj} columnObj={columnObj} />
     </div>
   );
 };

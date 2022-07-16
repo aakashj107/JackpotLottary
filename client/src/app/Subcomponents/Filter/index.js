@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 const Filter = (props) => {
   const [tenToNineTeen, setTenToNineTeen] = useState(false);
   const [thirtyToThirtyNine, setThirtyToThirtyNine] = useState(false);
+  const [luckyPick, setLuckyPick] = useState("");
 
   useEffect(() => {
     props.checkBoxCheckedUnchecked.isTenToNinteen
@@ -19,6 +20,20 @@ const Filter = (props) => {
     props.setThirtyToThirtyNine(() =>
       props.checkBoxForThirtyToThirtyNine(event.target.checked)
     );
+  };
+
+  useEffect(() => {
+    if (props.evenFilterSelected && props.oddFilterSelected) {
+      props.setAllFilterSelected(true);
+    } else {
+      props.setAllFilterSelected(false);
+    }
+  }, [props.evenFilterSelected, props.oddFilterSelected]);
+
+  const setluckyPickValue = () => {
+    let columnXYObj = props.columnXYObj;
+    columnXYObj[5].rowData[0].value = luckyPick;
+    props.setXYColumnobj([...columnXYObj]);
   };
 
   return (
@@ -62,8 +77,18 @@ const Filter = (props) => {
       </div>
       <div className="col-sm-3 bg-danger py-2 border">
         <div className="form-check form-check-inline ">
-          <input className="col-sm-3" type="text" maxLength="3" />
-          <button type="button" className="btn btn-secondary btn-sm ms-1 ">
+          <input
+            value={luckyPick}
+            onChange={(ev) =>setLuckyPick(ev.target.value)}
+            className="col-sm-3"
+            type="text"
+            maxLength="3"
+          />
+          <button
+            onClick={setluckyPickValue}
+            type="button"
+            className="btn btn-secondary btn-sm ms-1 "
+          >
             <div className="fw-bold"> L P </div>
           </button>
         </div>
@@ -89,8 +114,8 @@ const Filter = (props) => {
             className="form-check-input"
             type="checkbox"
             id="inlineCheckbox1"
-            value={props.allFilterSelected}
-            onClick={(ev) => props.setAllFilterSelected(ev.target.checked)}
+            checked={props.allFilterSelected}
+            onClick={(ev) => props.selectAllFilter(ev.target.checked)}
           />
           <label
             className="form-check-label fw-bold text-white"
@@ -104,7 +129,7 @@ const Filter = (props) => {
             className="form-check-input"
             type="checkbox"
             id="inlineCheckbox2"
-            value={props.oddFilterSelected}
+            checked={props.oddFilterSelected}
             onClick={(ev) => props.setOddFilterSelected(ev.target.checked)}
           />
           <label
@@ -120,7 +145,7 @@ const Filter = (props) => {
             className="form-check-input"
             type="checkbox"
             id="inlineCheckbox2"
-            value={props.evenFilterSelected}
+            checked={props.evenFilterSelected}
             onClick={(ev) => props.setEvenFilterSelected(ev.target.checked)}
           />
           <label
