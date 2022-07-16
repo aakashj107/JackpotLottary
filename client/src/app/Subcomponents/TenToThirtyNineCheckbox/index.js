@@ -26,29 +26,30 @@ const TenToThirtyNineCheckbox = ({
     <>
       <div className="row ">
         <table className="table table-bordered">
+          <tbody>
           <tr className="bg-danger">
-            <th>
+            <th style={{paddingBottom:"10px"}}>
               <div className="form-check">
                 <input
                   className="form-check-input"
                   type="checkbox"
                   value=""
-                  id="flexCheckDefault"
-                />
-                <label className="form-check-label" for="flexCheckDefault">
+                  id="flexCheckDefault" />
+                <label className="form-check-label fw-bold text-white" for="flexCheckDefault">
                   10 to 39
                 </label>
               </div>
             </th>
           </tr>
+          </tbody>
         </table>
       </div>
       <div className="row">
         <table className="table table-bordered">
           <tbody>
             {columnObj.map((x, index) => (
-              <tr className="bg-white">
-                <th>
+              <tr>
+                <th style={{paddingBottom:"11px"}}>
                   <div className="form-check">
                     <input
                       checked={x.firstColumn.value}
@@ -60,12 +61,12 @@ const TenToThirtyNineCheckbox = ({
                       }
                       id="flexCheckDefault"
                     />
-                    <label className="form-check-label" for="flexCheckDefault">
+                    <label className="form-check-label text-white" for="flexCheckDefault">
                       {x.firstColumn.count}
                     </label>
                   </div>
                 </th>
-                <th>
+                <th style={{paddingBottom:"11px"}}>
                   <div className="form-check">
                     <input
                       checked={x.secondColumn.value}
@@ -77,7 +78,7 @@ const TenToThirtyNineCheckbox = ({
                       type="checkbox"
                       id="flexCheckDefault"
                     />
-                    <label className="form-check-label" for="flexCheckDefault">
+                    <label className="form-check-label text-white" for="flexCheckDefault">
                       {x.secondColumn.count}
                     </label>
                   </div>

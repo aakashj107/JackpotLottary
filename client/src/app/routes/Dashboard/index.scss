@@ -1,6 +1,6 @@
 @import "../../styles/variables";
 .Dashboard {
-  background-color: map-get($color, "light");
+  //background-color: map-get($color, "light");
   .inner {
     padding: {
       top: map-get($spacing, "xl");

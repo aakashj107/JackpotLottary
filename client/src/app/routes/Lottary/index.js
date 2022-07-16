@@ -1,3 +1,4 @@
+import Axios from "axios";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Buttons from "../../Subcomponents/Buttons";
 import Columns from "../../Subcomponents/Columns";
@@ -7,6 +8,8 @@ import TenToThirtyNineCheckbox from "../../Subcomponents/TenToThirtyNineCheckbox
 import TotalResult from "../../Subcomponents/TotalResult";
 import { range } from "../../Utils/util";
 import "./index.css";
+import bg_img from "../../assets/images/inner-bg01.jpg"
+
 
 const Lottary = () => {
   const creatRowData = (start, end) => {
@@ -191,7 +194,7 @@ const Lottary = () => {
     isTenToNinteen: false,
   });
 
-  
+
   const [allFilterSelected, setAllFilterSelected] = useState(false);
   const [oddFilterSelected, setOddFilterSelected] = useState(false);
   const [evenFilterSelected, setEvenFilterSelected] = useState(false);
@@ -226,7 +229,7 @@ const Lottary = () => {
       let totalCounter = 0;
       columnXYObj[index].rowData.map((y, ind) => {
         if (y.value) {
-        totalCounter = totalCounter + parseInt(y.value);
+          totalCounter = totalCounter + parseInt(y.value);
         }
       });
       columnXYObj[index].total = totalCounter;
@@ -240,6 +243,25 @@ const Lottary = () => {
     setOddFilterSelected(value);
     setEvenFilterSelected(value);
   }
+
+  const onClickBuy = async (lotteryData) => {
+    try {
+      //e.preventDefault();
+
+      const res = await Axios.post("/api/game/createNewGame", lotteryData);
+
+
+      if (res.status === 200) {
+        const response = res.data.payload;
+        window.alert("success");
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response && error.response.data) {
+        window.alert(error.response.data.message);
+      }
+    }
+  };
 
 
   return (
@@ -270,13 +292,9 @@ const Lottary = () => {
             setColumnobj={setColumnobj}
           />
         </div>
-        <Columns allFilterSelected={allFilterSelected}
-        oddFilterSelected={oddFilterSelected}
-        evenFilterSelected={evenFilterSelected} getTotalAndPoint={getTotalAndPoint} columnObj={columnXYObj} setColumnobj={setXYColumnobj} />
-        <TotalResult columnXYObj={columnXYObj} />
-      </div>
 
-      <Buttons columnXYObj={columnXYObj} setXYColumnobj={setXYColumnobj} setColumnobj={setColumnobj} columnObj={columnObj} />
+      <Buttons onClickBuy={onClickBuy} columnXYObj={columnXYObj} setXYColumnobj={setXYColumnobj} setColumnobj={setColumnobj} columnObj={columnObj} />
+    </div>
     </div>
   );
 };

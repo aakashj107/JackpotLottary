@@ -6,6 +6,7 @@ export const authSlice = createSlice({
     isAuthenticated: false,
     user: {},
     expires: null,
+    currentGame:{}
   },
   reducers: {
     signin: (state, action) => {
@@ -18,9 +19,12 @@ export const authSlice = createSlice({
       state.user = {};
       state.expires = null;
     },
+    setCurrentGame:(state,action) => {
+      state.currentGame = action.payload.current_game
+    }
   },
 });
 
-export const { signin, signout } = authSlice.actions;
+export const { signin, signout,setCurrentGame } = authSlice.actions;
 
 export default authSlice.reducer;

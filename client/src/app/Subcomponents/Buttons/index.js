@@ -1,6 +1,11 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const Buttons = ({ columnXYObj, columnObj, setColumnobj, setXYColumnobj }) => {
+
+const Buttons = ({ columnXYObj, columnObj,onClickBuy }) => {
+
+  const {user,currentGame} = useSelector((state) => state.auth);
+
   const buySelectedLottery = () => {
     const selectedLotteryNumber = [];
     const selectedCheckBoxes = [];
@@ -39,6 +44,15 @@ const Buttons = ({ columnXYObj, columnObj, setColumnobj, setXYColumnobj }) => {
   setXYColumnobj([...columnXYObj]);
   setColumnobj([...columnObj]);
    
+
+    const lotteryData = {
+      gameID: currentGame.gameid,
+      lottery_amt: selectedLotteryNumber,
+      lottery: selectedCheckBoxes
+    }
+
+    onClickBuy(lotteryData);
+    console.log(lotteryData);
   };
 
   return (
@@ -60,24 +74,23 @@ const Buttons = ({ columnXYObj, columnObj, setColumnobj, setXYColumnobj }) => {
       </div>
       <div className="col-sm-7 ">
         <div className="d-grid gap-2 d-md-block">
-          <button className="btn btn-success" type="button">
+          <button className="btn purchase-now" type="button">
             Transacations Details (F2)
           </button>
-          <button className="btn btn-secondary" type="button">
+          {/* <button className="btn purchase-now" type="button">
             My Account (F3)
-          </button>
-          <button className="btn btn-danger" type="button">
+          </button> */}
+          <button className="btn purchase-now" type="button">
             Results (F4){" "}
           </button>
-          <button onClick={clearAllData} className="btn btn-info" type="button">
+          <button onClick={clearAllData} className="btn purchase-now" type="button">
             {" "}
             Clear All (F9)
           </button>
           <button
-            className="btn btn-primary"
+            className="btn purchase-now"
             onClick={buySelectedLottery}
-            type="button"
-          >
+            type="button">
             {" "}
             Buy (F5)
           </button>

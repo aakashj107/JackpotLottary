@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import './index.scss'
 
 const Columns = ({
   columnObj,
@@ -68,52 +69,45 @@ const Columns = ({
   return (
     <div className="col-sm-8 border">
       <div className="row">
-        <table className="table table-borderless fw-bold">
+        <table className="table table-borderless fw-bold tblColumns" >
           <thead>
-            <tr className="bg-warning">
+            <tr className="row-color">
+              <th scope="col">
+                <h5 className="text-center"></h5>
+              </th>
               <th scope="col">
                 <h5 className="text-center"></h5>
               </th>
               {columnObj.map((x) => (
+                <>
+                <th>X{x.headerCount}</th>
                 <th scope="col">
-                  X{x.headerCount}
-                  <input
-                    onChange={(e) => {
-                      handleChange(e, x.headerCount, true);
-                    }}
-                    className="col-sm-8"
-                    type="text"
-                    maxLength="3"
-                  />{" "}
+                  <input onChange={(e) => { handleChange(e, x.headerCount, true);}}
+                    className="form-control input-center" type="text" maxLength="3" />
                 </th>
+                </>
               ))}
             </tr>
           </thead>
           <tbody>
             {columnObj.map((data, index) => (
-              <tr className={data.headerCount % 2 ? "bg-warning" : "bg-white"}>
+              <tr className={data.headerCount % 2 ? "row-color" : "bg-white"}>
+                <th>Y{data.headerCount}{" "}</th>
                 <th scope="row">
-                  Y{data.headerCount}{" "}
-                  <input
-                    onChange={(e) => {
-                      handleChange(e, data.headerCount, false);
-                    }}
-                    className="col-sm-8"
-                    type="text"
-                    maxLength="3"
-                  />{" "}
+                  <input onChange={(e) => { handleChange(e, data.headerCount, false);}}
+                    className=" form-control input-center" type="text" maxLength="3" />
                 </th>
                 {data.rowData.map((x, rowInd) => (
+                <>
+                
+                  <td>{data.headerCount === 0 ? `0${x.count}` : x.count}{" "}</td>
                   <td>
-                    {data.headerCount === 0 ? `0${x.count}` : x.count}
-                    <input
-                      value={x.value}
+                     
+                    <input value={x.value}
                       onChange={(e) => onSingleRowDataChange(e, rowInd, index)}
-                      className="col-sm-8"
-                      type="text"
-                      maxLength="3"
-                    />{" "}
+                      className="form-control input-center" type="text" maxLength="3" />
                   </td>
+                  </>
                 ))}
               </tr>
             ))}
