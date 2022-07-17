@@ -6,13 +6,21 @@ const Filter = (props) => {
   const [luckyPick, setLuckyPick] = useState("");
 
   useEffect(() => {
-    props.checkBoxCheckedUnchecked.isTenToNinteen
+      props.checkBoxCheckedUnchecked.isTenToNinteen
       ? setTenToNineTeen(props.checkBoxCheckedUnchecked.event)
       : setThirtyToThirtyNine(props.checkBoxCheckedUnchecked.event);
   }, [props.checkBoxCheckedUnchecked]);
 
+  useEffect(() => {
+    if(props.tenToThirtynine){
+      handleClickTenToNineTeen(props.tenToThirtynine);
+      handleClickThirtyToThirtyNine(props.tenToThirtynine);
+    }
+}, [props.tenToThirtynine]);
+
   const handleClickTenToNineTeen = (event) => {
-    setTenToNineTeen(() => props.checkBoxForTenToNinteen(event.target.checked));
+    setTenToNineTeen(event.target.checked);
+    props.setTenToNineTeen(() => props.checkBoxForTenToNinteen(event.target.checked));
   };
 
   const handleClickThirtyToThirtyNine = (event) => {
@@ -92,6 +100,8 @@ const Filter = (props) => {
           <input
             className="form-check-input"
             type="checkbox"
+            checked={props.familyPick}
+            onClick={(event) => props.setFamilyPick(event.target.checked)}
             id="inlineCheckbox2"
             value="option2"
           />

@@ -8,14 +8,13 @@ import TenToThirtyNineCheckbox from "../../Subcomponents/TenToThirtyNineCheckbox
 import TotalResult from "../../Subcomponents/TotalResult";
 import { range } from "../../Utils/util";
 import "./index.css";
-import bg_img from "../../assets/images/inner-bg01.jpg"
-
+import bg_img from "../../assets/images/inner-bg01.jpg";
 
 const Lottary = () => {
   const creatRowData = (start, end) => {
     const abc = [...Array.from(range(start, end))].map((x) => ({
       count: x,
-      value: '',
+      value: "",
     }));
     return abc;
   };
@@ -23,60 +22,80 @@ const Lottary = () => {
   const [columnXYObj, setXYColumnobj] = useState([
     {
       headerCount: 0,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(0, 9),
       total: 0,
       point: 0,
     },
     {
       headerCount: 1,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(10, 19),
       total: 0,
       point: 0,
     },
     {
       headerCount: 2,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(20, 29),
       total: 0,
       point: 0,
     },
     {
       headerCount: 3,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(30, 39),
       total: 0,
       point: 0,
     },
     {
       headerCount: 4,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(40, 49),
       total: 0,
       point: 0,
     },
     {
       headerCount: 5,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(50, 59),
       total: 0,
       point: 0,
     },
     {
       headerCount: 6,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(60, 69),
       total: 0,
       point: 0,
     },
     {
       headerCount: 7,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(70, 79),
       total: 0,
       point: 0,
     },
     {
       headerCount: 8,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(80, 89),
       total: 0,
       point: 0,
     },
     {
       headerCount: 9,
+      headerXCountValue: "",
+      headerYCountValue: "",
       rowData: creatRowData(90, 99),
       total: 0,
       point: 0,
@@ -87,7 +106,7 @@ const Lottary = () => {
     {
       firstColumn: {
         count: 10,
-        value: false,
+        value: true,
       },
       secondColumn: {
         count: 30,
@@ -187,17 +206,19 @@ const Lottary = () => {
   ]);
 
   const [tenToNineTeen, setTenToNineTeen] = useState(false);
-  const [isAllChecked, setIsAllChecked] = useState(false);
   const [thirtyToThirtyNine, setThirtyToThirtyNine] = useState(false);
+  const [isAllChecked, setIsAllChecked] = useState(false);
   const [checkBoxCheckedUnchecked, setCheckBoxCheckedUnchecked] = useState({
     event: false,
     isTenToNinteen: false,
   });
 
+  const [tenToThirtynine, setTenToThirtynine] = useState(undefined);
 
   const [allFilterSelected, setAllFilterSelected] = useState(false);
   const [oddFilterSelected, setOddFilterSelected] = useState(false);
   const [evenFilterSelected, setEvenFilterSelected] = useState(false);
+  const [familyPick, setFamilyPick] = useState(false);
 
   const checkBoxForTenToNinteen = (value) => {
     setTenToNineTeen(value);
@@ -215,7 +236,11 @@ const Lottary = () => {
     setColumnobj([...columnObj]);
   };
 
-  const handleFilterCheckBox = (event, isTenToNinteen) => {
+  const handleFilterCheckBox = (
+    event,
+    isTenToNinteen,
+    singleCheckBoxCall = true
+  ) => {
     isTenToNinteen ? setTenToNineTeen(event) : setThirtyToThirtyNine(event);
     setCheckBoxCheckedUnchecked({
       event: event,
@@ -239,17 +264,9 @@ const Lottary = () => {
     setXYColumnobj([...updatedColumnObj]);
   };
 
-  const selectAllFilter =(value) => {
-    setOddFilterSelected(value);
-    setEvenFilterSelected(value);
-  }
-
   const onClickBuy = async (lotteryData) => {
     try {
-      //e.preventDefault();
-
       const res = await Axios.post("/api/game/createNewGame", lotteryData);
-
 
       if (res.status === 200) {
         const response = res.data.payload;
@@ -258,43 +275,74 @@ const Lottary = () => {
     } catch (error) {
       console.error(error);
       if (error.response && error.response.data) {
-        window.alert(error.response.data.message);
+        // window.alert(error.response.data.message);
       }
     }
   };
 
+  const selectAllFilter = (value) => {
+    setOddFilterSelected(value);
+    setEvenFilterSelected(value);
+  };
 
   return (
-    <div className="container-fluid">
-      <DrawStatus />
-      <Filter
-        checkBoxForTenToNinteen={checkBoxForTenToNinteen}
-        checkBoxForThirtyToThirtyNine={checkBoxForThirtyToThirtyNine}
-        setTenToNineTeen={setTenToNineTeen}
-        setThirtyToThirtyNine={setThirtyToThirtyNine}
-        checkBoxCheckedUnchecked={checkBoxCheckedUnchecked}
-        columnObj={columnObj}
-        allFilterSelected={allFilterSelected}
-        oddFilterSelected={oddFilterSelected}
-        evenFilterSelected={evenFilterSelected}
-        selectAllFilter={selectAllFilter}
-        setAllFilterSelected={setAllFilterSelected}
-        setEvenFilterSelected={setEvenFilterSelected}
-        setOddFilterSelected={setOddFilterSelected}
-        columnXYObj={columnXYObj}
-        setXYColumnobj={setXYColumnobj}
-      />
-      <div className="row">
-        <div className="col-sm-1 bordered">
-          <TenToThirtyNineCheckbox
-            handleFilterCheckBox={handleFilterCheckBox}
-            columnObj={columnObj}
-            setColumnobj={setColumnobj}
+    <div
+      className="container-fluid bg-overlay bg_img container_background inner-item"
+      style={{ backgroundImage: "../../assets/images/inner-bg01.jpg" }}
+    >
+      <div className="inner-inner">
+        <DrawStatus />
+        <Filter
+          familyPick={familyPick}
+          setFamilyPick={setFamilyPick}
+          checkBoxForTenToNinteen={checkBoxForTenToNinteen}
+          checkBoxForThirtyToThirtyNine={checkBoxForThirtyToThirtyNine}
+          setTenToNineTeen={setTenToNineTeen}
+          setThirtyToThirtyNine={setThirtyToThirtyNine}
+          checkBoxCheckedUnchecked={checkBoxCheckedUnchecked}
+          columnObj={columnObj}
+          allFilterSelected={allFilterSelected}
+          oddFilterSelected={oddFilterSelected}
+          evenFilterSelected={evenFilterSelected}
+          setAllFilterSelected={setAllFilterSelected}
+          setEvenFilterSelected={setEvenFilterSelected}
+          setOddFilterSelected={setOddFilterSelected}
+          selectAllFilter={selectAllFilter}
+          columnXYObj={columnXYObj}
+          setXYColumnobj={setXYColumnobj}
+          tenToThirtynine={tenToThirtynine}
+        />
+        <div className="row">
+          <div className="col-sm-1 bordered">
+            <TenToThirtyNineCheckbox
+              handleFilterCheckBox={handleFilterCheckBox}
+              columnObj={columnObj}
+              setColumnobj={setColumnobj}
+              setTenToThirtynineValue={setTenToThirtynine}
+              thirtyToThirtyNine={thirtyToThirtyNine}
+              tenToNineTeen={tenToNineTeen}
+            />
+          </div>
+          <Columns
+            allFilterSelected={allFilterSelected}
+            oddFilterSelected={oddFilterSelected}
+            evenFilterSelected={evenFilterSelected}
+            getTotalAndPoint={getTotalAndPoint}
+            columnObj={columnXYObj}
+            setColumnobj={setXYColumnobj}
+            familyPick={familyPick}
           />
+          <TotalResult columnXYObj={columnXYObj} />
         </div>
 
-      <Buttons onClickBuy={onClickBuy} columnXYObj={columnXYObj} setXYColumnobj={setXYColumnobj} setColumnobj={setColumnobj} columnObj={columnObj} />
-    </div>
+        <Buttons
+          onClickBuy={onClickBuy}
+          columnXYObj={columnXYObj}
+          setXYColumnobj={setXYColumnobj}
+          setColumnobj={setColumnobj}
+          columnObj={columnObj}
+        />
+      </div>
     </div>
   );
 };

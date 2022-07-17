@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import './index.scss'
+import "./index.scss";
 
 const Columns = ({
   columnObj,
@@ -8,9 +8,24 @@ const Columns = ({
   allFilterSelected,
   evenFilterSelected,
   oddFilterSelected,
+  familyPick,
 }) => {
-  const handleChange = (event, headerCount, isXaxis) => {
-    columnObj.map((x, index) =>
+  const familyPickData = {
+    a: [0, 5, 50, 55],
+    b: [1, 6, 10, 15, 51, 56, 60, 65],
+    c: [2, 7, 20, 25, 52, 57, 70, 75],
+    d: [3, 8, 30, 35, 53, 58, 80, 85],
+    e: [4, 9, 40, 45, 54, 59, 90, 95],
+  };
+
+  const handleChange = (
+    event,
+    headerCount,
+    isXaxis,
+    xIndex,
+    headerXYCountValue
+  ) => {
+    columnObj.map((x, index) => {
       x.rowData.map((y, ind) => {
         let a = y.count.toString();
         if (!isXaxis && a.length === 1) {
@@ -51,8 +66,9 @@ const Columns = ({
             columnObj[index].rowData[ind].value = event.target.value;
           }
         }
-      })
-    );
+      });
+      columnObj[xIndex][headerXYCountValue] = event.target.value;
+    });
 
     setColumnobj([...columnObj]);
     // need to change.
@@ -60,6 +76,26 @@ const Columns = ({
   };
 
   const onSingleRowDataChange = (event, rowIndex, index) => {
+    if (familyPick) {
+      for (let data in familyPickData) {
+        if (
+          familyPickData[data].includes(
+            columnObj[index].rowData[rowIndex].count
+          )
+        ) {
+          familyPickData[data].map((x, indexOfx) => {
+            columnObj.map((y, indexOfCol) => {
+              y.rowData.map((z, indexOfRowData) => {
+                if (z.count === x) {
+                  columnObj[indexOfCol].rowData[indexOfRowData].value =
+                    event.target.value;
+                }
+              });
+            });
+          });
+        }
+      }
+    }
     columnObj[index].rowData[rowIndex].value = event.target.value;
     setColumnobj([...columnObj]);
     // need to change.
@@ -69,7 +105,7 @@ const Columns = ({
   return (
     <div className="col-sm-8 border">
       <div className="row">
-        <table className="table table-borderless fw-bold tblColumns" >
+        <table className="table table-borderless fw-bold tblColumns">
           <thead>
             <tr className="row-color">
               <th scope="col">
@@ -78,13 +114,26 @@ const Columns = ({
               <th scope="col">
                 <h5 className="text-center"></h5>
               </th>
-              {columnObj.map((x) => (
+              {columnObj.map((x, index) => (
                 <>
-                <th>X{x.headerCount}</th>
-                <th scope="col">
-                  <input onChange={(e) => { handleChange(e, x.headerCount, true);}}
-                    className="form-control input-center" type="text" maxLength="3" />
-                </th>
+                  <th>X{x.headerCount}</th>
+                  <th scope="col">
+                    <input
+                      value={x.headerXCountValue}
+                      onChange={(e) => {
+                        handleChange(
+                          e,
+                          x.headerCount,
+                          true,
+                          index,
+                          "headerXCountValue"
+                        );
+                      }}
+                      className="form-control input-center"
+                      type="text"
+                      maxLength="3"
+                    />
+                  </th>
                 </>
               ))}
             </tr>
@@ -92,21 +141,38 @@ const Columns = ({
           <tbody>
             {columnObj.map((data, index) => (
               <tr className={data.headerCount % 2 ? "row-color" : "bg-white"}>
-                <th>Y{data.headerCount}{" "}</th>
+                <th>Y{data.headerCount} </th>
                 <th scope="row">
-                  <input onChange={(e) => { handleChange(e, data.headerCount, false);}}
-                    className=" form-control input-center" type="text" maxLength="3" />
+                  <input
+                    value={data.headerYCountValue}
+                    onChange={(e) => {
+                      handleChange(
+                        e,
+                        data.headerCount,
+                        false,
+                        index,
+                        "headerYCountValue"
+                      );
+                    }}
+                    className=" form-control input-center"
+                    type="text"
+                    maxLength="3"
+                  />
                 </th>
                 {data.rowData.map((x, rowInd) => (
-                <>
-                
-                  <td>{data.headerCount === 0 ? `0${x.count}` : x.count}{" "}</td>
-                  <td>
-                     
-                    <input value={x.value}
-                      onChange={(e) => onSingleRowDataChange(e, rowInd, index)}
-                      className="form-control input-center" type="text" maxLength="3" />
-                  </td>
+                  <>
+                    <td>{data.headerCount === 0 ? `0${x.count}` : x.count} </td>
+                    <td>
+                      <input
+                        value={x.value}
+                        onChange={(e) =>
+                          onSingleRowDataChange(e, rowInd, index)
+                        }
+                        className="form-control input-center"
+                        type="text"
+                        maxLength="3"
+                      />
+                    </td>
                   </>
                 ))}
               </tr>

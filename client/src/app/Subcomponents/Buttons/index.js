@@ -1,14 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
-const Buttons = ({ columnXYObj, columnObj,onClickBuy }) => {
-
+const Buttons = ({ columnXYObj, columnObj, setColumnobj, setXYColumnobj, onClickBuy }) => {
+  
   const {user,currentGame} = useSelector((state) => state.auth);
-
-  const buySelectedLottery = () => {
-    const selectedLotteryNumber = [];
+  const selectedLotteryNumber = [];
     const selectedCheckBoxes = [];
+  const buySelectedLottery = () => {
+    
     columnXYObj.map((x, index) => {
       x.rowData.map((y, ind) => {
         if (y.value != undefined) {
@@ -37,23 +36,24 @@ const Buttons = ({ columnXYObj, columnObj,onClickBuy }) => {
       x.rowData.map((y, ind) => {
         columnXYObj[index].rowData[ind].value = '';
       });
+      columnXYObj[index].headerXCountValue = '';
+      columnXYObj[index].headerYCountValue = '';
       columnXYObj[index].point = 0;
       columnXYObj[index].total = 0;
     });
 
   setXYColumnobj([...columnXYObj]);
   setColumnobj([...columnObj]);
-   
-
-    const lotteryData = {
-      gameID: currentGame.gameid,
-      lottery_amt: selectedLotteryNumber,
-      lottery: selectedCheckBoxes
-    }
-
-    onClickBuy(lotteryData);
-    console.log(lotteryData);
   };
+
+  const lotteryData = {
+    gameID: user.gameid,
+    lottery_amt: selectedLotteryNumber,
+    lottery: selectedCheckBoxes
+  }
+
+  onClickBuy(lotteryData);
+  console.log(lotteryData);
 
   return (
     <div className="row py-2">
